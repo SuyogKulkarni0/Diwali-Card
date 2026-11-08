@@ -1,0 +1,13 @@
+{
+  "name": "Happy Diwali, Devyani",
+  "short_name": "Diwali Card",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "background_color": "#12062b",
+  "theme_color": "#12062b",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

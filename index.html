@@ -7,7 +7,15 @@
 <title>Happy Diwali, Devyani 🪔</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;800&family=Plus+Jakarta+Sans:wght@400;600;700&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Diwali Card">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<!-- fonts load without blocking first paint -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@800&family=Plus+Jakarta+Sans:wght@600;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@800&family=Plus+Jakarta+Sans:wght@600;700&display=swap"></noscript>
 <style>
 :root{--gold:#ffc94d;--pink:#ff4f9a;--violet:#b36bff;--mute:#c9b8e6;--ease:cubic-bezier(.2,.8,.2,1)}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -68,11 +76,11 @@ h1 .g{background:linear-gradient(90deg,var(--gold),var(--pink),var(--violet));-w
 #ov.on{display:block;animation:fade .35s ease}
 @keyframes fade{from{opacity:0}}
 #st{z-index:1}
-.ovtop{position:absolute;z-index:5;top:0;left:0;right:0;display:flex;align-items:center;gap:12px;padding:14px 16px 26px;background:linear-gradient(180deg,rgba(10,4,32,.95) 60%,rgba(10,4,32,0));pointer-events:none}
+.ovtop{position:absolute;z-index:5;top:0;left:0;right:0;display:flex;align-items:center;gap:12px;padding:14px 16px 26px;padding-top:calc(14px + env(safe-area-inset-top));background:linear-gradient(180deg,rgba(10,4,32,.95) 60%,rgba(10,4,32,0));pointer-events:none}
 #back{pointer-events:auto;border:1px solid rgba(255,255,255,.25);background:rgba(20,8,44,.85);color:#fff;font-weight:700;font-size:14px;padding:10px 16px;border-radius:99px;cursor:pointer;transition:transform .15s}
 #back:active{transform:scale(.94)}
 #ovt{font-family:'Fraunces',serif;font-weight:800;font-size:20px}
-#ovh{position:absolute;z-index:5;top:64px;left:50%;transform:translateX(-50%);width:max-content;max-width:90%;text-align:center;background:rgba(40,16,76,.82);border:1px solid rgba(255,255,255,.16);padding:9px 20px;border-radius:99px;font-weight:600;font-size:14px;pointer-events:none}
+#ovh{position:absolute;z-index:5;top:calc(64px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);width:max-content;max-width:90%;text-align:center;background:rgba(40,16,76,.82);border:1px solid rgba(255,255,255,.16);padding:9px 20px;border-radius:99px;font-weight:600;font-size:14px;pointer-events:none}
 #ovh:empty{display:none}
 #toast{position:fixed;z-index:70;left:50%;top:calc(18px + env(safe-area-inset-top));transform:translate3d(-50%,-110px,0);background:var(--gold);color:#2b1250;font-weight:700;padding:11px 22px;border-radius:99px;transition:transform .5s var(--ease);box-shadow:0 8px 24px rgba(0,0,0,.4);text-align:center;max-width:90vw;will-change:transform}
 #toast.on{transform:translate3d(-50%,0,0)}
@@ -85,7 +93,7 @@ h1 .g{background:linear-gradient(90deg,var(--gold),var(--pink),var(--violet));-w
 @keyframes fhr{0%{transform:translate3d(0,0,0) scale(.6);opacity:.9}50%{transform:translate3d(24px,-55vh,0) scale(1)}100%{transform:translate3d(-16px,-112vh,0) scale(1.2);opacity:0}}
 
 /* letter */
-#letter{display:none;position:absolute;z-index:4;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:78px 18px calc(34px + env(safe-area-inset-bottom))}
+#letter{display:none;position:absolute;z-index:4;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:calc(78px + env(safe-area-inset-top)) 18px calc(34px + env(safe-area-inset-bottom))}
 #letter.on{display:block}
 .card{position:relative;max-width:520px;margin:10px auto 30px;border:1px solid rgba(255,201,77,.6);border-radius:28px;padding:30px 24px 34px;text-align:center;line-height:1.95;font-size:20px;font-family:'Kalam','Tiro Devanagari Marathi',cursive;
   background:radial-gradient(circle at 50% 0,rgba(255,201,77,.14),transparent 55%),linear-gradient(180deg,rgba(42,13,72,.94),rgba(22,7,46,.96));
@@ -116,6 +124,23 @@ h1 .g{background:linear-gradient(90deg,var(--gold),var(--pink),var(--violet));-w
 #splash p{color:var(--mute);font-size:15px;animation:tw 1.8s infinite}
 #splash.lit p{opacity:0;animation:none}
 body.lock{overflow:hidden}
+html,body{min-height:100dvh}
+#letter{transform:translateZ(0)}
+.tip{color:#fff;font-size:13.5px;max-width:320px;line-height:1.55;margin-top:22px;padding:12px 16px;border-radius:16px;background:rgba(255,201,77,.12);border:1px solid rgba(255,201,77,.4)}
+.tip b{color:var(--gold)}
+#splash p.tip{animation:none;color:#fff;font-size:13.5px}
+#splash.lit .tip{opacity:0;transition:opacity .4s}
+.lights{top:env(safe-area-inset-top)}
+main{padding-top:calc(76px + env(safe-area-inset-top))}
+.moon{top:calc(40px + env(safe-area-inset-top))}
+/* lite mode for phones: fewer always-running effects */
+@media(pointer:coarse){
+  .star{animation:none;opacity:.7}
+  .tile .em{animation:none}
+  .tile::before{opacity:.2}
+  .bulb{animation-duration:3.2s}
+  .card{box-shadow:none}
+}
 @media(prefers-reduced-motion:reduce){.star,.bulb,.tile .em,.sp-diya,.flm{animation:none}}
 </style>
 </head>
@@ -161,9 +186,9 @@ body.lock{overflow:hidden}
 const PAL=['#ff4f9a','#ffc94d','#b36bff','#ff7a45','#5ee0ff','#7dff9b'];
 const rnd=(a,b)=>a+Math.random()*(b-a), pick=a=>a[Math.random()*a.length|0];
 const COARSE=matchMedia('(pointer:coarse)').matches;
-let Q=COARSE?.6:1;               // adaptive quality, drops automatically if frames get slow
+let Q=COARSE?.5:1;               // adaptive quality, drops automatically if frames get slow
 let slow=0;
-const MAXP=COARSE?520:1300;
+const MAXP=COARSE?340:1300;
 const N=n=>Math.max(6,Math.round(n*Q));
 function sprite(w,h,fn){const c=document.createElement('canvas');c.width=w;c.height=h;fn(c.getContext('2d'));return c}
 const GLOW=(r,c0,c1)=>sprite(r*2,r*2,g=>{const gr=g.createRadialGradient(r,r,0,r,r,r);gr.addColorStop(0,c0);gr.addColorStop(1,c1);g.fillStyle=gr;g.fillRect(0,0,r*2,r*2)});
@@ -191,18 +216,23 @@ class FX{
     if(dt>30){if(++slow>20){Q=Math.max(.3,Q*.75);slow=0}}else if(slow>0)slow--;
     const k=Math.min(dt/16.67,2.5),g=this.g,w=this.w,h=this.h;
     g.setTransform(this.d,0,0,this.d,0,0);
-    g.globalCompositeOperation='destination-out';g.fillStyle='rgba(0,0,0,.26)';g.fillRect(0,0,w,h);
+    g.clearRect(0,0,w,h);
     g.globalCompositeOperation='source-over';if(this._d)this._d(g);
-    g.globalCompositeOperation='lighter';
+    if(!COARSE)g.globalCompositeOperation='lighter';
     const R=this.r;for(let i=R.length-1;i>=0;i--){const q=R[i],dx=q.tx-q.x,dy=q.ty-q.y,d=Math.hypot(dx,dy);
       if(d<12){this.burst(q.tx,q.ty,q.kind);R.splice(i,1);continue}
       const s=11*k;q.x+=dx/d*s;q.y+=dy/d*s;this.spark(q.x,q.y,rnd(-.4,.4),rnd(.2,1.2),'#ffd9a0',1.8,.05,.02);
       g.globalAlpha=1;g.fillStyle='#fff';g.fillRect(q.x-2.5,q.y-2.5,5,5)}
-    const P=this.p,fr=Math.pow(.985,k);let j=0;
+    /* particles drawn as short streaks, batched into one stroke per colour+fade level */
+    const P=this.p,fr=Math.pow(.985,k),B=new Map(),tl=2.6*k;let j=0;
     for(let i=0;i<P.length;i++){const p=P[i];p.a-=p.d*k;if(p.a<=0)continue;
-      p.vx*=fr;p.vy+=p.g*k;p.x+=p.vx*k;p.y+=p.vy*k;
-      g.globalAlpha=p.a;g.fillStyle=p.c;g.fillRect(p.x-p.s,p.y-p.s,p.s*2,p.s*2);P[j++]=p}
+      p.vx*=fr;p.vy+=p.g*k;p.x+=p.vx*k;p.y+=p.vy*k;P[j++]=p;
+      const key=p.c+(p.a>.66?0:p.a>.33?1:2);let arr=B.get(key);if(!arr){arr=[];B.set(key,arr)}
+      arr.push(p.x-p.vx*tl,p.y-p.vy*tl,p.x,p.y)}
     P.length=j;
+    g.lineCap='round';g.lineWidth=3.2;
+    B.forEach((arr,key)=>{g.strokeStyle=key.slice(0,-1);g.globalAlpha=[1,.6,.3][key.slice(-1)];g.beginPath();
+      for(let m=0;m<arr.length;m+=4){g.moveTo(arr[m],arr[m+1]);g.lineTo(arr[m+2],arr[m+3])}g.stroke()});
     g.globalAlpha=1;g.globalCompositeOperation='source-over';
     if(P.length||R.length||this._d)requestAnimationFrame(t=>this.loop(t));
     else{this.on=false;g.setTransform(1,0,0,1,0,0);g.clearRect(0,0,this.c.width,this.c.height)}
@@ -252,7 +282,12 @@ function close(){ac&&ac.abort();cleanup&&cleanup();cleanup=null;st.draw=null;st.
 document.getElementById('back').onclick=close;
 const C=document.getElementById('st');
 
-splash.onclick=()=>{if(splash.classList.contains('lit'))return;splash.classList.add('lit');buzz(20);
+/* full screen: Fullscreen API where supported (Android/desktop); iPhone needs Add to Home Screen */
+function goFull(){try{const e=document.documentElement,f=e.requestFullscreen||e.webkitRequestFullscreen;if(f){const r=f.call(e,{navigationUI:'hide'});r&&r.catch&&r.catch(()=>{})}}catch(_){}}
+const IOS=/iP(hone|ad|od)/.test(navigator.userAgent),STANDALONE=navigator.standalone||matchMedia('(display-mode:standalone),(display-mode:fullscreen)').matches;
+if(IOS&&!STANDALONE){const t=document.createElement('p');t.className='tip';t.innerHTML='📱 <b>For full screen on iPhone:</b><br>tap the Share button ⬆️ in Safari → <b>Add to Home Screen</b> → open it from your home screen.';splash.appendChild(t)}
+function loadKalam(){const l=document.createElement('link');l.rel='stylesheet';l.href='https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&display=swap';document.head.appendChild(l)}
+splash.onclick=()=>{if(splash.classList.contains('lit'))return;splash.classList.add('lit');buzz(20);goFull();loadKalam();
   setTimeout(()=>{splash.classList.add('out');document.body.classList.add('go');
     [0,350,700].forEach((t,i)=>setTimeout(()=>bg.burst(innerWidth*(.2+i*.3),innerHeight*(.25+(i%2)*.12),pick(['heart','ring','sphere'])),t))},1500);
   setTimeout(()=>splash.remove(),2700)};
@@ -315,7 +350,7 @@ lantern(sig){let n=0;const wishes=['Health','Happiness','Success','Love','Peace'
     n++;hint(n<5?`Tap anywhere to release a wish lantern (${n} / 5)`:'Your wishes are in the sky ✨');if(n===5)setTimeout(()=>complete('lantern'),1200)},sig);
 },
 final(sig){letter.classList.add('on');hint('');letter.scrollTop=0;
-  const iv=setInterval(()=>st.launch(rnd(.1,.9)*innerWidth,innerHeight,rnd(.08,.92)*innerWidth,rnd(.1,.45)*innerHeight,pick(['sphere','ring','willow','heart','heart'])),COARSE?1500:1000);
+  const iv=setInterval(()=>st.launch(rnd(.1,.9)*innerWidth,innerHeight,rnd(.08,.92)*innerWidth,rnd(.1,.45)*innerHeight,pick(['sphere','ring','willow','heart','heart'])),COARSE?2200:1000);
   const hv=setInterval(()=>{if(lan.children.length>9)return;const d=document.createElement('div');d.className='fh';d.textContent=pick(['💛','🤍','🌸','✨','🪷','💗']);d.style.cssText=`left:${rnd(2,92)}%;font-size:${rnd(16,28)}px`;lan.appendChild(d);setTimeout(()=>d.remove(),7200)},COARSE?800:500);
   const ts=[0,1,2,3].map(i=>setTimeout(()=>st.burst(innerWidth*(.15+i*.23),innerHeight*.2,pick(['heart','ring','sphere'])),i*300));
   ts.push(setTimeout(()=>{for(let i=0;i<5;i++)setTimeout(()=>st.burst(innerWidth*rnd(.15,.85),innerHeight*rnd(.12,.4),'heart'),i*300)},16500));
