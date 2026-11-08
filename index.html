@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Happy Diwali, Devyani 🪔</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;800&family=Plus+Jakarta+Sans:wght@400;600;700&family=Tiro+Devanagari+Marathi&family=Kalam:wght@400;700&family=Mukta:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#ffc94d;--pink:#ff4f9a;--violet:#b36bff;--ink:#fff;--mute:#c9b8e6}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{min-height:100%}
+body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--ink);background:linear-gradient(180deg,#07031a 0%,#1b0a3d 55%,#3a1250 100%) fixed;overflow-x:hidden}
+canvas{position:fixed;inset:0;width:100%;height:100%;touch-action:none}
+#bg{z-index:0;pointer-events:none}
+.star{position:fixed;width:2px;height:2px;background:#fff;border-radius:50%;animation:tw 3s infinite;z-index:0}
+@keyframes tw{50%{opacity:.15}}
+.moon{position:fixed;top:36px;right:8%;width:54px;height:54px;border-radius:50%;background:#fff6d6;box-shadow:0 0 40px 10px rgba(255,236,170,.35);z-index:0}
+.skyline{position:fixed;left:0;right:0;bottom:0;height:90px;z-index:0;opacity:.9}
+
+main{position:relative;z-index:2;max-width:760px;margin:auto;padding:46px 20px 110px;text-align:center}
+.badge{display:inline-block;border:1px solid rgba(255,201,77,.4);background:rgba(255,201,77,.08);color:var(--gold);font-weight:700;font-size:13px;padding:7px 16px;border-radius:99px;margin-bottom:20px}
+h1{font-family:'Fraunces',serif;font-weight:800;font-size:clamp(38px,9vw,68px);line-height:1.04}
+h1 .g{background:linear-gradient(90deg,var(--gold),var(--pink),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--mute);line-height:1.6;max-width:460px;margin:16px auto 8px}
+.prog{margin:18px auto 26px;font-weight:700;color:var(--gold);font-size:15px}
+.bar{width:220px;height:6px;border-radius:9px;background:rgba(255,255,255,.12);margin:8px auto 0;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--pink));transition:.6s}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media(min-width:620px){.grid{grid-template-columns:repeat(3,1fr)}}
+.tile{position:relative;cursor:pointer;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.07);backdrop-filter:blur(8px);border-radius:22px;padding:22px 10px 18px;transition:.25s;color:#fff;font:inherit}
+.tile:hover{transform:translateY(-5px);border-color:var(--gold);box-shadow:0 12px 34px rgba(255,160,60,.25)}
+.tile .em{font-size:52px;display:block;animation:bob 3s ease-in-out infinite}
+.tile:nth-child(2n) .em{animation-delay:-1s}.tile:nth-child(3n) .em{animation-delay:-2s}
+@keyframes bob{50%{transform:translateY(-7px) rotate(4deg)}}
+.tile b{display:block;margin-top:8px;font-size:15px}
+.tile small{color:var(--mute);font-size:12px}
+.tile.done{border-color:var(--gold);background:rgba(255,201,77,.1)}
+.tile.done::after{content:"✓";position:absolute;top:8px;right:12px;color:#1b0a3d;background:var(--gold);width:22px;height:22px;border-radius:50%;font-size:13px;font-weight:800;line-height:22px}
+.tile.final{grid-column:1/-1;background:linear-gradient(135deg,rgba(255,79,154,.25),rgba(179,107,255,.25))}
+.tile.locked{opacity:.5;filter:grayscale(.6)}
+.tile.ready{opacity:1;animation:pulse 1.4s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 10px rgba(255,201,77,.0),0 0 40px 6px rgba(255,201,77,.45)}}
+
+/* overlay */
+#ov{position:fixed;inset:0;z-index:20;display:none;background:radial-gradient(circle at 50% 100%,#3a1250 0,#0a0420 70%)}
+#ov.on{display:block;animation:fade .5s}
+@keyframes fade{from{opacity:0}}
+#st{z-index:1}
+.ovtop{background:linear-gradient(180deg,rgba(10,4,32,.95) 60%,rgba(10,4,32,0));padding-bottom:26px!important;position:absolute;z-index:5;top:0;left:0;right:0;display:flex;align-items:center;gap:12px;padding:14px 16px}
+#back{border:1px solid rgba(255,255,255,.25);background:rgba(0,0,0,.35);color:#fff;font:700 14px 'Plus Jakarta Sans';padding:9px 16px;border-radius:99px;cursor:pointer}
+#ovt{font-family:'Fraunces',serif;font-weight:800;font-size:20px}
+#ovh{position:absolute;z-index:5;top:62px;left:0;right:0;text-align:center;color:var(--mute);font-size:15px;padding:0 20px;pointer-events:none}
+#toast{position:fixed;z-index:40;left:50%;top:22px;transform:translate(-50%,-90px);background:var(--gold);color:#2b1250;font-weight:700;padding:11px 22px;border-radius:99px;transition:.5s;box-shadow:0 10px 30px rgba(0,0,0,.4);text-align:center}
+#toast.on{transform:translate(-50%,0)}
+#lan{position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden}
+.lantern{position:absolute;bottom:-90px;text-align:center;animation:rise 9s linear forwards}
+.lantern span{font-size:58px;display:block;filter:drop-shadow(0 0 18px rgba(255,160,40,.9))}
+.lantern em{font-style:normal;font-size:13px;font-weight:700;color:#2b1250;background:var(--gold);padding:3px 10px;border-radius:99px}
+@keyframes rise{0%{transform:translate(0,0)}25%{transform:translate(18px,-28vh)}50%{transform:translate(-18px,-58vh)}100%{transform:translate(10px,-115vh)}}
+
+/* letter */
+#letter{display:none;position:absolute;z-index:4;inset:0;overflow:auto;padding:70px 18px 30px}
+#letter.on{display:block}
+.card{max-width:520px;margin:10px auto 30px;background:rgba(22,6,44,.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,201,77,.5);border-radius:28px;padding:30px 24px 34px;line-height:1.95;font-size:20px;font-family:'Kalam','Tiro Devanagari Marathi',cursive;animation:rise2 1.4s both,glow 3.5s ease-in-out 1.4s infinite;text-align:center}
+@keyframes rise2{from{opacity:0;transform:translateY(40px) scale(.94)}}
+@keyframes glow{50%{box-shadow:0 0 70px 8px rgba(255,150,70,.4)}0%,100%{box-shadow:0 0 40px rgba(255,150,70,.18)}}
+.ln{opacity:0;transform:translateY(16px);filter:blur(7px);animation:lnIn 1.3s ease forwards;animation-delay:var(--d)}
+@keyframes lnIn{to{opacity:1;transform:none;filter:none}}
+.card p+p{margin-top:14px}
+.flm{font-size:52px;display:block;animation:fl 1.1s ease-in-out infinite alternate;filter:drop-shadow(0 0 18px #ff9a1a)}
+@keyframes fl{to{transform:scale(1.12) rotate(4deg)}}
+.card h2{font-family:'Fraunces',serif;font-weight:800;font-size:32px;line-height:1.3;margin:6px 0 4px;background:linear-gradient(90deg,var(--gold),var(--pink),var(--violet),var(--gold));background-size:250%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:lnIn 1.3s .2s forwards,shine 5s linear infinite;opacity:0}
+@keyframes shine{to{background-position:250%}}
+.card .to{font-size:23px;color:#ffe3a3;margin:14px 0 8px}
+.card .from{margin-top:22px;font-size:22px;color:var(--gold)}
+.card .from b{display:block;font-size:30px;color:var(--pink);text-shadow:0 0 20px rgba(255,79,154,.6)}
+.fh{position:absolute;bottom:-40px;font-size:22px;animation:fhr 7s linear forwards;opacity:.85}
+@keyframes fhr{0%{transform:translate(0,0) scale(.6)}50%{transform:translate(24px,-55vh) scale(1)}100%{transform:translate(-16px,-112vh) scale(1.2);opacity:0}}
+body.lock{overflow:hidden;position:fixed;width:100%}
+.tile,.badge,h1,.sub,.prog{opacity:0;animation:lnIn .9s ease forwards}
+.badge{animation-delay:.1s}h1{animation-delay:.3s}.sub{animation-delay:.6s}.prog{animation-delay:.8s}
+.tile:nth-child(1){animation-delay:.9s}.tile:nth-child(2){animation-delay:1s}.tile:nth-child(3){animation-delay:1.1s}.tile:nth-child(4){animation-delay:1.2s}.tile:nth-child(5){animation-delay:1.3s}.tile:nth-child(6){animation-delay:1.4s}.tile.final{animation-delay:1.55s}
+#ov{padding-top:env(safe-area-inset-top)}
+#letter{padding-bottom:calc(30px + env(safe-area-inset-bottom))}
+/* ===== UI enhancement layer ===== */
+.aur{position:fixed;border-radius:50%;filter:blur(90px);opacity:.38;z-index:0;pointer-events:none;animation:drift 16s ease-in-out infinite alternate}
+.aur.a{width:360px;height:360px;background:#ff4f9a;top:-90px;left:-120px}
+.aur.b{width:420px;height:420px;background:#7a3bff;top:38%;right:-180px;animation-delay:-6s}
+.aur.c{width:320px;height:320px;background:#ff8a2a;bottom:-120px;left:10%;opacity:.28;animation-delay:-11s}
+@keyframes drift{to{transform:translate(50px,70px) scale(1.2)}}
+.lights{position:fixed;top:0;left:0;right:0;height:64px;z-index:3;pointer-events:none}
+.lights svg{position:absolute;inset:0;width:100%;height:100%}
+.lights path{fill:none;stroke:rgba(255,220,150,.35);stroke-width:1.4;vector-effect:non-scaling-stroke}
+.bulb{position:absolute;width:9px;height:12px;border-radius:50% 50% 55% 55%;background:var(--c);box-shadow:0 0 12px 3px var(--c);animation:tw2 2.4s ease-in-out infinite;transform:translate(-50%,0)}
+@keyframes tw2{0%,100%{opacity:1;transform:translate(-50%,0) scale(1)}50%{opacity:.35;transform:translate(-50%,0) scale(.82)}}
+main{padding-top:74px}
+.badge{backdrop-filter:blur(6px);box-shadow:0 0 24px rgba(255,201,77,.18)}
+.sub{font-size:15.5px}
+.bar{height:8px;width:min(260px,70vw);box-shadow:0 0 14px rgba(255,201,77,.15) inset}
+.bar i{box-shadow:0 0 14px var(--gold);border-radius:9px}
+.tile{--ac:#ffc94d;border-radius:24px;padding:24px 10px 20px;overflow:hidden;
+  background:radial-gradient(circle at 50% -10%,rgba(255,255,255,.16),transparent 62%),rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.12);box-shadow:0 8px 30px rgba(0,0,0,.28)}
+.tile::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 30%,var(--ac),transparent 62%);opacity:.12;transition:.3s}
+.tile:hover::before,.tile:active::before{opacity:.32}
+.tile:hover{border-color:var(--ac);box-shadow:0 14px 38px -8px var(--ac)}
+.tile:active{transform:scale(.96)}
+.tile .em{position:relative;font-size:56px;filter:drop-shadow(0 0 16px var(--ac))}
+.tile b,.tile small{position:relative}
+.tile b{font-family:'Fraunces',serif;font-size:17px;letter-spacing:.2px}
+.tile.final{padding:26px 14px}
+.tile.final b{font-size:20px}
+body:not(.go) .badge,body:not(.go) h1,body:not(.go) .sub,body:not(.go) .prog,body:not(.go) .tile{animation-play-state:paused}
+#ovh{left:50%;right:auto;transform:translateX(-50%);width:max-content;max-width:90%;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:9px 20px;border-radius:99px;color:#fff;font-weight:600;font-size:14px;box-shadow:0 6px 24px rgba(0,0,0,.3)}
+#ovh:empty{display:none}
+#back{backdrop-filter:blur(8px);transition:.2s}#back:active{transform:scale(.94)}
+#ovt{text-shadow:0 0 18px rgba(255,201,77,.5)}
+.card{background:radial-gradient(circle at 50% 0,rgba(255,201,77,.14),transparent 55%),linear-gradient(180deg,rgba(40,12,70,.85),rgba(20,6,42,.9));position:relative;border-color:rgba(255,201,77,.6)}
+.card::before,.card::after{content:"❀";position:absolute;color:var(--gold);opacity:.7;font-size:20px}
+.card::before{top:14px;left:18px}.card::after{top:14px;right:18px}
+.orn{color:var(--gold);letter-spacing:12px;font-size:13px;opacity:.85;margin-bottom:6px}
+.card h2{font-size:36px}
+#splash{position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:24px;text-align:center;cursor:pointer;background:radial-gradient(circle at 50% 42%,#3d1458 0,#12062b 55%,#07031a 100%);transition:opacity 1.1s ease,transform 1.1s ease}
+#splash.out{opacity:0;transform:scale(1.18);pointer-events:none}
+.sp-diya{position:relative;font-size:130px;line-height:1;filter:drop-shadow(0 0 26px rgba(255,150,40,.45));animation:bob 3s ease-in-out infinite}
+.sp-diya::after{content:"";position:absolute;left:50%;top:-30px;width:260px;height:260px;transform:translateX(-50%) scale(0);background:radial-gradient(circle,rgba(255,190,70,.55),transparent 65%);transition:.9s;z-index:-1}
+.sp-fl{position:absolute;left:50%;top:-52px;font-size:78px;transform:translateX(-50%) scale(0);transform-origin:bottom;transition:transform .7s cubic-bezier(.3,1.6,.5,1);filter:drop-shadow(0 0 22px #ff9a1a)}
+#splash.lit .sp-fl{transform:translateX(-50%) scale(1);animation:fl 1s ease-in-out .7s infinite alternate}
+#splash.lit .sp-diya::after{transform:translateX(-50%) scale(1.6)}
+#splash h2{font-family:'Fraunces',serif;font-weight:800;font-size:clamp(26px,7vw,40px);margin-top:26px}
+#splash h2 span{background:linear-gradient(90deg,var(--gold),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}
+#splash p{color:var(--mute);font-size:15px;animation:tw 1.8s infinite}
+#splash.lit p{opacity:0;animation:none}
+</style>
+</head>
+<body>
+<div class="aur a"></div><div class="aur b"></div><div class="aur c"></div>
+<canvas id="bg"></canvas>
+<div class="lights" id="lights"><svg viewBox="0 0 400 64" preserveAspectRatio="none"><path d="M0 0Q50 56 100 0T200 0T300 0T400 0"/></svg></div>
+<div id="splash"><div class="sp-diya"><span class="sp-fl">🔥</span>🪔</div><h2>Devyani, this one's<br>for <span>you</span> 💛</h2><p>Tap the diya to light it</p></div>
+<div class="moon"></div>
+<svg class="skyline" viewBox="0 0 800 90" preserveAspectRatio="none"><path fill="#12062b" d="M0 90V60h40V45h30V60h50V35l20-20 20 20v25h60V50h40V62h70V40h25V25l15-15 15 15v15h25v30h60V55h50V38l15-14 15 14v17h60V64h50V48h40V66h60V52h35V90z"/><g fill="#ffc94d"><rect x="52" y="52" width="4" height="5"/><rect x="140" y="42" width="4" height="5"/><rect x="262" y="48" width="4" height="5"/><rect x="332" y="34" width="4" height="5"/><rect x="480" y="46" width="4" height="5"/><rect x="590" y="30" width="4" height="5"/><rect x="650" y="56" width="4" height="5"/><rect x="745" y="58" width="4" height="5"/></g></svg>
+
+<main>
+  <span class="badge">🪔 Diwali 2026 · a card from Suyog</span>
+  <h1>Happy Diwali,<br><span class="g">Devyani</span></h1>
+  <p class="sub">The night sky is waiting for you. Tap each surprise below, light it up, and collect them all to unlock something special.</p>
+  <div class="prog"><span id="pc">0 / 6 lit</span><div class="bar"><i id="pb"></i></div></div>
+  <div class="grid" id="grid"></div>
+</main>
+
+<div id="ov">
+  <canvas id="st"></canvas>
+  <div id="lan"></div>
+  <div class="ovtop"><button id="back">← Back</button><div id="ovt"></div></div>
+  <div id="ovh"></div>
+  <div id="letter">
+    <div class="card">
+      <span class="flm">🪔</span>
+      <h2>Happy Diwali!</h2>
+      <div class="orn ln" style="--d:.5s">✦ ❀ ✦</div>
+      <div class="to ln" style="--d:1s">Dear Devyani,</div>
+      <p class="ln" style="--d:2.4s">आज दिवाळी आहे, आणि दिवे लावताना मला सारखी तुझीच आठवण आली. वाटलं, माझ्या आयुष्यातला सगळ्यात सुंदर प्रकाश तर तूच आहेस. ✨</p>
+      <p class="ln" style="--d:5.2s">तुझ्या घरच्यांना माझ्याकडून खूप खूप शुभेच्छा. त्यांना नेहमी निरोगी, आनंदी आणि हसतमुख बघायला मिळो, हीच देवाकडे प्रार्थना. 🙏</p>
+      <p class="ln" style="--d:8.2s">खरं सांगू? मला तुझी आणि तुझ्या माणसांची नेहमी काळजी वाटते. तू स्वतःची काळजी घे, वेळेवर जेव, आणि खूप हस. तुझं हसू मला सगळ्यात जास्त आवडतं. 🤍</p>
+      <p class="ln" style="--d:11.2s">फराळ भरपूर खा, फटाके जपून उडव, आणि हो... थोडा फराळ माझ्यासाठीही ठेव 😄</p>
+      <p class="ln" style="--d:13.4s">तू माझ्यासाठी फक्त खास नाहीस, तूच माझी सगळ्यात आवडती ज्योत आहेस. 💛</p>
+      <div class="from ln" style="--d:15.6s">Yours Forever,<b>Suyog</b></div>
+    </div>
+  </div>
+</div>
+<div id="toast"></div>
+
+<script>
+/* ---------- particle engine ---------- */
+const PAL=['#ff4f9a','#ffc94d','#b36bff','#ff7a45','#5ee0ff','#7dff9b'];
+const rnd=(a,b)=>a+Math.random()*(b-a), pick=a=>a[Math.random()*a.length|0];
+class FX{
+  constructor(c){this.c=c;this.g=c.getContext('2d');this.p=[];this.r=[];this.draw=null;this.size();addEventListener('resize',()=>this.size());requestAnimationFrame(()=>this.loop())}
+  size(){this.d=Math.min(devicePixelRatio||1,2);this.c.width=innerWidth*this.d;this.c.height=innerHeight*this.d}
+  clear(){this.p.length=0;this.r.length=0;this.g.setTransform(1,0,0,1,0,0);this.g.clearRect(0,0,this.c.width,this.c.height)}
+  spark(x,y,vx,vy,c,s=2.4,d=.012,g=.06){this.p.push({x,y,vx,vy,a:1,d,c,s,g})}
+  burst(x,y,kind='sphere',col){
+    const c=col||pick(PAL),c2=pick(PAL);
+    if(kind==='heart'){for(let i=0;i<80;i++){const t=i/80*6.2832;this.spark(x,y,16*Math.pow(Math.sin(t),3)*.32,-(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t))*.32,'#ff4f9a',2.7,.011,.03)}}
+    else if(kind==='ring'){for(let i=0;i<64;i++){const a=i/64*6.2832;this.spark(x,y,Math.cos(a)*5.2,Math.sin(a)*5.2,c,2.5,.012,.04)}for(let i=0;i<32;i++){const a=i/32*6.2832;this.spark(x,y,Math.cos(a)*2.6,Math.sin(a)*2.6,c2,2.2,.012,.04)}}
+    else if(kind==='willow'){for(let i=0;i<110;i++){const a=rnd(0,6.2832),s=rnd(1,5);this.spark(x,y,Math.cos(a)*s,Math.sin(a)*s,'#ffc94d',2,.006,.05)}}
+    else{for(let i=0;i<110;i++){const a=rnd(0,6.2832),s=rnd(.5,1)*6.8;this.spark(x,y,Math.cos(a)*s,Math.sin(a)*s,i%3?c:c2,2.5,.012,.06)}}
+  }
+  launch(x0,y0,tx,ty,kind){this.r.push({x:x0,y:y0,tx,ty,kind})}
+  loop(){
+    const g=this.g,w=innerWidth,h=innerHeight;g.setTransform(this.d,0,0,this.d,0,0);
+    g.globalCompositeOperation='destination-out';g.fillStyle='rgba(0,0,0,.26)';g.fillRect(0,0,w,h);
+    g.globalCompositeOperation='source-over';if(this.draw)this.draw(g);
+    g.globalCompositeOperation='lighter';
+    this.r=this.r.filter(k=>{const dx=k.tx-k.x,dy=k.ty-k.y,d=Math.hypot(dx,dy);
+      if(d<12){this.burst(k.tx,k.ty,k.kind);return false}
+      k.x+=dx/d*11;k.y+=dy/d*11;this.spark(k.x,k.y,rnd(-.4,.4),rnd(.2,1.2),'#ffd9a0',1.8,.05,.02);
+      g.globalAlpha=1;g.fillStyle='#fff';g.beginPath();g.arc(k.x,k.y,3,0,6.3);g.fill();return true});
+    this.p=this.p.filter(p=>{p.vx*=.985;p.vy+=p.g;p.x+=p.vx;p.y+=p.vy;p.a-=p.d;if(p.a<=0)return false;
+      g.globalAlpha=p.a;g.fillStyle=p.c;g.beginPath();g.arc(p.x,p.y,p.s,0,6.3);g.fill();return true});
+    g.globalAlpha=1;g.globalCompositeOperation='source-over';
+    requestAnimationFrame(()=>this.loop());
+  }
+}
+const bg=new FX(document.getElementById('bg')), st=new FX(document.getElementById('st'));
+setInterval(()=>{if(!ov.classList.contains('on')){bg.launch(rnd(.1,.9)*innerWidth,innerHeight,rnd(.1,.9)*innerWidth,rnd(.1,.4)*innerHeight,pick(['sphere','ring','willow','heart']))}},1900);
+
+/* stars */
+for(let i=0;i<70;i++){const s=document.createElement('i');s.className='star';s.style.left=rnd(0,100)+'%';s.style.top=rnd(0,70)+'%';s.style.animationDelay=rnd(0,3)+'s';document.body.appendChild(s)}
+
+/* ---------- hub ---------- */
+const ov=document.getElementById('ov'),ovt=document.getElementById('ovt'),ovh=document.getElementById('ovh'),lan=document.getElementById('lan'),letter=document.getElementById('letter'),toastEl=document.getElementById('toast'),grid=document.getElementById('grid');
+const ITEMS=[
+ {k:'rocket',em:'🚀',t:'Rockets',s:'Launch the sky show',h:'Tap anywhere to launch a rocket 🚀 (5 bursts)'},
+ {k:'sparkler',em:'🌟',t:'Sparkler',s:'Draw with light',h:'Hold and drag to write your wishes in sparks ✍️'},
+ {k:'anar',em:'🎇',t:'Anar',s:'Light the fountain',h:'Tap to light the fuse and watch it erupt'},
+ {k:'chakri',em:'🌀',t:'Chakri',s:'Spin the wheel',h:'Tap the wheel again and again to make it spin faster'},
+ {k:'diya',em:'🪔',t:'Diyas',s:'Light all seven',h:'Tap each diya to light it (0 / 7)'},
+ {k:'lantern',em:'🏮',t:'Lanterns',s:'Send up wishes',h:'Tap anywhere to release a wish lantern (0 / 5)'},
+];
+const done=new Set();let cur=null,ac=null,cleanup=null;
+const ACC=['#ff7a45','#ffc94d','#ff4f9a','#5ee0ff','#ffa24d','#b36bff'];
+/* fairy lights: 4 swags x 6 bulbs along the wire */
+(()=>{const L=document.getElementById('lights'),cols=['#ffc94d','#ff4f9a','#5ee0ff','#ff7a45','#b36bff','#7dff9b'];let k=0;
+ for(let s=0;s<4;s++)for(let j=1;j<=5;j++){const t=j/6,b=document.createElement('i');b.className='bulb';b.style.left=(s*25+t*25)+'%';b.style.top=(Math.sin(t*Math.PI)*27*(s%2?1:1)-2)+'px';b.style.setProperty('--c',cols[k%6]);b.style.animationDelay=(k*.23)+'s';k++;L.appendChild(b)}})();
+ITEMS.forEach((it,ix)=>{const b=document.createElement('button');b.className='tile';b.style.setProperty('--ac',ACC[ix]);b.id='t_'+it.k;b.innerHTML=`<span class="em">${it.em}</span><b>${it.t}</b><small>${it.s}</small>`;b.onclick=()=>open(it);grid.appendChild(b)});
+const fin=document.createElement('button');fin.className='tile final locked';fin.id='t_final';fin.innerHTML='<span class="em">💌</span><b>Your Diwali letter</b><small id="fs">🔒 Light all 6 to unlock</small>';
+fin.onclick=()=>{if(done.size<6)return toast('Light up all 6 first 🔒');open({k:'final',t:'For Devyani 💌',h:''})};grid.appendChild(fin);
+
+function toast(m){toastEl.textContent=m;toastEl.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>toastEl.classList.remove('on'),2600)}
+function complete(k){if(done.has(k))return;done.add(k);document.getElementById('t_'+k).classList.add('done');
+  document.getElementById('pc').textContent=done.size+' / 6 lit';document.getElementById('pb').style.width=(done.size/6*100)+'%';
+  if(done.size===6){fin.classList.remove('locked');fin.classList.add('ready');document.getElementById('fs').textContent='✨ Tap to open';toast('All lit! Your letter is ready 💌')}else toast('✨ Done! '+done.size+' / 6')}
+function hint(m){ovh.textContent=m}
+
+function open(it){
+  cur=it.k;ov.classList.add('on');document.body.classList.add('lock');navigator.vibrate&&navigator.vibrate(12);st.clear();st.draw=null;ovt.textContent=it.t;hint(it.h);lan.innerHTML='';letter.classList.remove('on');
+  ac=new AbortController();const sig={signal:ac.signal};
+  cleanup=SCENES[it.k](sig)||null;
+}
+function close(){ac&&ac.abort();cleanup&&cleanup();cleanup=null;st.draw=null;lan.innerHTML='';letter.classList.remove('on');ov.classList.remove('on');document.body.classList.remove('lock')}
+document.getElementById('back').onclick=close;
+const C=document.getElementById('st');
+const splash=document.getElementById('splash');
+splash.onclick=()=>{if(splash.classList.contains('lit'))return;splash.classList.add('lit');navigator.vibrate&&navigator.vibrate(20);
+  setTimeout(()=>{splash.classList.add('out');document.body.classList.add('go');
+    [0,350,700].forEach((t,i)=>setTimeout(()=>bg.burst(innerWidth*(.2+i*.3),innerHeight*(.25+(i%2)*.12),pick(['heart','ring','sphere'])),t))},1700);
+  setTimeout(()=>splash.remove(),3000)};
+
+/* ---------- scenes ---------- */
+const SCENES={
+rocket(sig){let n=0;const kinds=['sphere','heart','ring','willow','sphere'];
+  C.addEventListener('pointerdown',e=>{st.launch(e.clientX+rnd(-40,40),innerHeight,e.clientX,e.clientY,kinds[n%5]);n++;hint(n<5?`Boom! ${n} / 5 🚀`:'Spectacular! Keep going if you like 🎆');if(n===5)setTimeout(()=>complete('rocket'),900)},sig);
+},
+sparkler(sig){let down=false,lx=0,ly=0,dist=0;
+  const mv=(x,y)=>{if(!down)return;dist+=Math.hypot(x-lx,y-ly);
+    for(let i=0;i<7;i++)st.spark(x,y,rnd(-1.8,1.8),rnd(-1.8,1.8),pick(['#fff','#ffe9a8','#ffc94d','#ff9a4d']),rnd(1,2.4),rnd(.012,.03),.07);
+    lx=x;ly=y;if(dist>900)complete('sparkler')};
+  C.addEventListener('pointerdown',e=>{down=true;lx=e.clientX;ly=e.clientY;mv(lx,ly)},sig);
+  C.addEventListener('pointermove',e=>mv(e.clientX,e.clientY),sig);
+  addEventListener('pointerup',()=>down=false,sig);
+  st.draw=g=>{if(down){const gr=g.createRadialGradient(lx,ly,0,lx,ly,34);gr.addColorStop(0,'rgba(255,255,255,.95)');gr.addColorStop(1,'rgba(255,180,60,0)');g.fillStyle=gr;g.beginPath();g.arc(lx,ly,34,0,6.3);g.fill()}};
+},
+anar(sig){let fire=0,ig=false;const bx=()=>innerWidth/2,by=()=>innerHeight*.78;
+  C.addEventListener('pointerdown',()=>{fire=260;if(!ig){ig=true;complete('anar')}hint('Wow! Tap again for another round 🎇')},sig);
+  st.draw=g=>{const x=bx(),y=by();
+    g.fillStyle='#c4262e';g.beginPath();g.moveTo(x-34,y+70);g.lineTo(x+34,y+70);g.lineTo(x+24,y-10);g.lineTo(x-24,y-10);g.closePath();g.fill();
+    g.fillStyle='#ffc94d';g.fillRect(x-31,y+30,62,10);g.fillStyle='#2b1250';g.fillRect(x-24,y-14,48,8);
+    if(fire<=0){g.fillStyle='#ffd9a0';g.beginPath();g.arc(x+rnd(-1,1),y-22+rnd(-2,2),4,0,6.3);g.fill()}
+    else{fire--;const hot=fire>130?['#ffc94d','#ff7a45','#fff']:['#ff4f9a','#b36bff','#5ee0ff','#ffc94d'];
+      for(let i=0;i<7;i++)st.spark(x+rnd(-8,8),y-14,rnd(-3,3),-rnd(7,15),pick(hot),rnd(1.6,2.8),rnd(.008,.018),.2)}};
+},
+chakri(sig){let ang=0,om=0,spun=0;const cx=()=>innerWidth/2,cy=()=>innerHeight/2,R=82,cols=['#ff4f9a','#ffc94d','#5ee0ff'];
+  C.addEventListener('pointerdown',()=>{om=Math.min(om+.32,.7);spun++;if(spun===3)complete('chakri');hint(spun<3?'Again! Faster! 🌀':'Hypnotic 😍 Keep spinning')},sig);
+  st.draw=g=>{ang+=om;om*=.992;const x=cx(),y=cy();
+    for(let i=0;i<3;i++){const a=ang+i*2.0944,tx=x+Math.cos(a)*R,ty=y+Math.sin(a)*R;
+      g.strokeStyle=cols[i];g.lineWidth=7;g.lineCap='round';g.beginPath();g.moveTo(x,y);g.lineTo(tx,ty);g.stroke();
+      if(om>.03){for(let k=0;k<3;k++)st.spark(tx,ty,-Math.sin(a)*om*R*.9+rnd(-1,1),Math.cos(a)*om*R*.9+rnd(-1,1),pick(['#ffc94d','#ff9a4d','#fff']),rnd(1.4,2.4),rnd(.02,.04),.05)}}
+    g.fillStyle='#fff';g.beginPath();g.arc(x,y,9,0,6.3);g.fill()};
+},
+diya(sig){const N=7,lit=Array(N).fill(false);let all=false;
+  const pos=i=>({x:innerWidth*(.12+.76*i/(N-1)),y:innerHeight*.72-Math.sin(i/(N-1)*Math.PI)*70});
+  C.addEventListener('pointerdown',e=>{let b=-1,bd=70;for(let i=0;i<N;i++){const p=pos(i),d=Math.hypot(p.x-e.clientX,p.y-e.clientY);if(d<bd){bd=d;b=i}}
+    if(b<0||lit[b])return;lit[b]=true;const p=pos(b);for(let i=0;i<30;i++)st.spark(p.x,p.y-30,rnd(-2,2),rnd(-3,-.5),'#ffc94d',2,.02,.04);
+    const c=lit.filter(Boolean).length;hint(c<N?`Tap each diya to light it (${c} / ${N})`:'Shubh Deepawali ✨');
+    if(c===N&&!all){all=true;complete('diya');[0,400,800].forEach((t,i)=>setTimeout(()=>st.burst(innerWidth*(.25+i*.25),innerHeight*.25,'willow'),t))}},sig);
+  st.draw=g=>{const t=Date.now()/110;
+    for(let i=0;i<N;i++){const {x,y}=pos(i);
+      if(lit[i]){const gr=g.createRadialGradient(x,y-30,0,x,y-30,95);gr.addColorStop(0,'rgba(255,190,70,.5)');gr.addColorStop(1,'rgba(255,190,70,0)');g.fillStyle=gr;g.beginPath();g.arc(x,y-30,95,0,6.3);g.fill()}
+      const bg2=g.createLinearGradient(0,y-10,0,y+30);bg2.addColorStop(0,'#f08a3a');bg2.addColorStop(1,'#8f3510');g.fillStyle=bg2;
+      g.beginPath();g.moveTo(x-38,y-10);g.quadraticCurveTo(x,y+48,x+38,y-10);g.quadraticCurveTo(x,y-2,x-38,y-10);g.fill();
+      g.fillStyle='#ffd37a';g.fillRect(x-4,y-17,8,6);
+      if(lit[i]){const f=1+Math.sin(t+i*2)*.12;g.save();g.translate(x,y-20);g.scale(f,f+Math.sin(t*1.7+i)*.08);
+        g.fillStyle='#ff7a1a';g.beginPath();g.moveTo(0,-44);g.quadraticCurveTo(15,-18,0,-4);g.quadraticCurveTo(-15,-18,0,-44);g.fill();
+        g.fillStyle='#ffe27a';g.beginPath();g.moveTo(0,-30);g.quadraticCurveTo(7,-16,0,-6);g.quadraticCurveTo(-7,-16,0,-30);g.fill();g.restore()}}
+    if(all){g.fillStyle='#ffc94d';g.font='800 clamp(30px,7vw,52px) Fraunces, serif';g.font='800 44px Fraunces, serif';g.textAlign='center';g.shadowColor='#ff9a1a';g.shadowBlur=24;g.fillText('Shubh Deepawali',innerWidth/2,innerHeight*.3);g.shadowBlur=0}};
+},
+lantern(sig){let n=0;const wishes=['Health','Happiness','Success','Love','Peace','Sweets','Laughter','Joy'];
+  C.addEventListener('pointerdown',e=>{const d=document.createElement('div');d.className='lantern';d.style.left=(e.clientX-30)+'px';
+    d.innerHTML=`<span>🏮</span><em>${wishes[n%wishes.length]}</em>`;lan.appendChild(d);setTimeout(()=>d.remove(),9200);
+    for(let i=0;i<24;i++)st.spark(e.clientX,e.clientY,rnd(-2,2),rnd(-2,2),pick(['#ffc94d','#ff9a4d','#fff']),2,.02,-.01);
+    n++;hint(n<5?`Tap anywhere to release a wish lantern (${n} / 5)`:'Your wishes are in the sky ✨');if(n===5)setTimeout(()=>complete('lantern'),1200)},sig);
+},
+final(sig){letter.classList.add('on');hint('');
+  letter.scrollTop=0;
+  const iv=setInterval(()=>st.launch(rnd(.1,.9)*innerWidth,innerHeight,rnd(.08,.92)*innerWidth,rnd(.1,.5)*innerHeight,pick(['sphere','ring','willow','heart','heart'])),900);
+  const hv=setInterval(()=>{const d=document.createElement('div');d.className='fh';d.textContent=pick(['💛','🤍','🌸','✨','🪷','💗']);d.style.left=rnd(2,92)+'%';d.style.fontSize=rnd(16,30)+'px';lan.appendChild(d);setTimeout(()=>d.remove(),7200)},450);
+  const ts=[0,1,2,3].map(i=>setTimeout(()=>st.burst(innerWidth*(.15+i*.23),innerHeight*.2,pick(['heart','ring','sphere'])),i*300));
+  ts.push(setTimeout(()=>{for(let i=0;i<5;i++)setTimeout(()=>st.burst(innerWidth*rnd(.15,.85),innerHeight*rnd(.12,.4),'heart'),i*260)},16500));
+  return()=>{clearInterval(iv);clearInterval(hv);ts.forEach(clearTimeout)};
+}};
+</script>
+</body>
+</html>
